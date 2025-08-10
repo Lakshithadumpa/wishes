@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wishes 🎉</title>
+<style>
+    body {
+        margin: 0;
+        background: linear-gradient(to bottom right, #ffdde1, #ee9ca7);
+        text-align: center;
+        font-family: 'Comic Sans MS', cursive;
+        color: white;
+        overflow: hidden;
+    }
+    h1 {
+        font-size: 3em;
+        margin-top: 50px;
+        animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+        from { text-shadow: 0 0 10px #ff6ec7; }
+        to { text-shadow: 0 0 30px #ffb347, 0 0 50px #ff6ec7; }
+    }
+    h2 {
+        margin-bottom: 20px;
+        font-size: 1.5em;
+    }
+    p {
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.2em;
+        background: rgba(255,255,255,0.2);
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 15px rgba(255,255,255,0.3);
+    }
+    /* Balloons */
+    .balloon {
+        position: absolute;
+        bottom: -150px;
+        width: 50px;
+        height: 70px;
+        border-radius: 50%;
+        animation: float 6s infinite ease-in;
+    }
+    @keyframes float {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-110vh); }
+    }
+</style>
+</head>
+<body>
+
+<!-- Birthday Message -->
+<h1>🎉 Happy Birthday My Dearest Bubu! 🎂</h1>
+<h2>Though miles apart, you’re always close to my heart ❤️</h2>
+
+<!-- Heartfelt Message -->
+<p>
+Today may not let me be there to hug you in person, but my wishes are wrapping around you like the warmest blanket.  
+You are not just my love — you are my safe place, my joy, and my forever teammate in life’s little adventures.  
+I trust you more than words can say, and I care for you in ways distance could never fade.  
+So, here’s to your smile, your dreams, and all the amazing moments waiting ahead.  
+Happy Birthday, my favourite human! 💕🎈
+</p>
+
+<!-- Confetti Script -->
+<canvas id="confettiCanvas"></canvas>
+
+<!-- Background Music -->
+<audio autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+</audio>
+
+<script>
+// Balloons
+function createBalloon() {
+    let balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    balloon.style.left = Math.random() * 100 + 'vw';
+    balloon.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    balloon.style.animationDuration = (Math.random() * 3 + 4) + 's';
+    document.body.appendChild(balloon);
+    setTimeout(() => balloon.remove(), 6000);
+}
+setInterval(createBalloon, 300);
+
+// Confetti
+let confettiCanvas = document.getElementById("confettiCanvas");
+let ctx = confettiCanvas.getContext("2d");
+confettiCanvas.width = window.innerWidth;
+confettiCanvas.height = window.innerHeight;
+
+let confetti = [];
+for (let i = 0; i < 150; i++) {
+    confetti.push({
+        x: Math.random() * confettiCanvas.width,
+        y: Math.random() * confettiCanvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 10,
+        color: `hsl(${Math.random() * 360}, 70%, 60%)`,
+        tilt: Math.random() * 10 - 10
+    });
+}
+
+function drawConfetti() {
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2, false);
+        ctx.fillStyle = c.color;
+        ctx.fill();
+    });
+    updateConfetti();
+}
+
+function updateConfetti() {
+    confetti.forEach(c => {
+        c.y += Math.cos(c.d) + 1 + c.r / 2;
+        c.x += Math.sin(c.d);
+        if (c.y > confettiCanvas.height) {
+            c.x = Math.random() * confettiCanvas.width;
+            c.y = -10;
+        }
+    });
+}
+setInterval(drawConfetti, 20);
+</script>
+
+</body>
+</html>
